@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { quizStore } from '../store/quizStore'
 
 import { MyQuiz } from '../types'
 
@@ -22,7 +23,10 @@ function QuestionContainer({ quizData, setCanGoNext }: QuestionContainerProp) {
         } else {
             setIsCorrect(false)
         }
-
+        quizStore.add({
+            ...quizData,
+            userAnswerIndex: selectedAnswerIndex,
+        })
         setCanGoNext(true)
         setIsSubmit(true)
     }
