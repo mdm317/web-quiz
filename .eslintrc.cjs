@@ -26,5 +26,8 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': 1,
         'react/jsx-filename-extension': 0,
         'react/react-in-jsx-scope': 0,
+        'import/prefer-default-export': 0,
+        'import/no-unresolved': 0,
+        'import/extensions': 0,
     },
 }
