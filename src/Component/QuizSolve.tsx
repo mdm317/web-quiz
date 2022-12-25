@@ -16,6 +16,9 @@ function QuizSolve() {
     }
     return (
         <>
+            <h1>
+                {quizOrder + 1}/{quizList.length}
+            </h1>
             <QuestionContainer
                 key={quizData.question}
                 quizData={quizData}
