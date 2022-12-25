@@ -25,3 +25,7 @@ export type MyQuizWithUserAnswer = {
     correctAnswerIndex: number
     userAnswerIndex: number
 }
+export type WrongAndCorrect = {
+    correct: number
+    wrong: number
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useQuizList from '../hooks/useQuizList'
 import { useQuizStore } from '../store/quizStore'
 import QuestionContainer from './QuestionContainer'
@@ -8,9 +9,14 @@ function QuizSolve() {
     const [quizOrder, setQuizOrder] = useState(0)
     const [canGoNext, setCanGoNext] = useState(false)
 
+    const navigate = useNavigate()
+    const reset = useQuizStore((state) => state.reset)
+
     const setStartTime = useQuizStore((state) => state.setStartTime)
+    const setEndTime = useQuizStore((state) => state.setEndTime)
     useEffect(() => {
         setStartTime()
+        reset()
     }, [])
 
     if (quizList === null) return <h1>Loading</h1>
@@ -20,8 +26,12 @@ function QuizSolve() {
         if (canGoNext && isNextQuestion) {
             setCanGoNext(false)
             setQuizOrder(quizOrder + 1)
+        } else {
+            setEndTime()
+            navigate('../check')
         }
     }
+
     return (
         <>
             <h1>
