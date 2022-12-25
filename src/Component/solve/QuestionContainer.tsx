@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useQuizStore } from '../store/quizStore'
-import { MyQuiz } from '../types'
+import { useQuizStore } from '../../store/quizStore'
+import { MyQuiz } from '../../types'
 
 type QuestionContainerProp = {
     quizData: MyQuiz

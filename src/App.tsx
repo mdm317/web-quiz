@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import './App.css'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import QuizSolve from './Component/QuizSolve'
+import QuizSolve from './Component/solve/QuizSolve'
 import Home from './Component/Home'
-import QuizCheck from './Component/QuizCheck'
+import QuizCheck from './Component/check/QuizCheck'
 
 function App() {
     return (

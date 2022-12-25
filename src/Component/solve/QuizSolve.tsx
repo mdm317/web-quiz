@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useQuizList from '../hooks/useQuizList'
-import { useQuizStore } from '../store/quizStore'
+import useQuizList from '../../hooks/useQuizList'
+import { useQuizStore } from '../../store/quizStore'
 import QuestionContainer from './QuestionContainer'
 
 function QuizSolve() {

@@ -42,3 +42,10 @@
 .active {
   border: 1px solid red;
 }
+.border_red {
+  border: 1px solid red;
+}
+
+.border_blue {
+  border: 1px solid blue;
+}
