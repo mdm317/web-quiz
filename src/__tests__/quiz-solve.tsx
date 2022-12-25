@@ -5,6 +5,7 @@ import '@testing-library/jest-dom'
 
 import * as React from 'react'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import QuizSolve from '../Component/solve/QuizSolve'
 import * as fetch from '../api/fetchQuizList'
 import * as randomUtil from '../utils/random'
@@ -92,7 +93,11 @@ test('다음 문항으로 넘어갈수 있어야 한다.', async () => {
     jest.spyOn(fetch, 'fetchQuizList').mockResolvedValue(mockQuizData)
 
     jest.spyOn(randomUtil, 'rand').mockImplementation(() => 2)
-    render(<QuizSolve />)
+    render(
+        <BrowserRouter>
+            <QuizSolve />
+        </BrowserRouter>
+    )
     const answer = await screen.findByText(mockQuizData[0].incorrect_answers[0])
     fireEvent.click(answer)
 
@@ -118,7 +123,11 @@ test('정답을 제출할때 저장되어야 한다.', async () => {
     jest.spyOn(fetch, 'fetchQuizList').mockResolvedValue(mockQuizData)
 
     jest.spyOn(randomUtil, 'rand').mockImplementation(() => 2)
-    render(<QuizSolve />)
+    render(
+        <BrowserRouter>
+            <QuizSolve />
+        </BrowserRouter>
+    )
     const answer = await screen.findByText(mockQuizData[0].incorrect_answers[0])
     fireEvent.click(answer)
 
