@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useQuizList from '../hooks/useQuizList'
+import { useQuizStore } from '../store/quizStore'
 import QuestionContainer from './QuestionContainer'
 
 function QuizSolve() {
     const quizList = useQuizList()
     const [quizOrder, setQuizOrder] = useState(0)
     const [canGoNext, setCanGoNext] = useState(false)
+
+    const setStartTime = useQuizStore((state) => state.setStartTime)
+    useEffect(() => {
+        setStartTime()
+    }, [])
+
     if (quizList === null) return <h1>Loading</h1>
     const quizData = quizList[quizOrder]
     const goNextQuestion = () => {
-        if (canGoNext) {
+        const isNextQuestion = quizList.length - 1 > quizOrder
+        if (canGoNext && isNextQuestion) {
             setCanGoNext(false)
             setQuizOrder(quizOrder + 1)
         }
