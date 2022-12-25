@@ -4,13 +4,15 @@ import '@testing-library/jest-dom'
 // NOTE: jest-dom adds handy assertions to Jest and is recommended, but not required
 
 import * as React from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
+import { StateCreator } from 'zustand'
 import QuizSolve from '../Component/QuizSolve'
 import * as fetch from '../api/fetchQuizList'
 import * as randomUtil from '../utils/random'
 import QuestionContainer from '../Component/QuestionContainer'
 import { MyQuiz, Quiz } from '../types'
-import { quizStore } from '../store/quizStore'
+import { useQuizStore } from '../store/quizStore'
 
 const myMockQuizData: MyQuiz = {
     category: 'History',
@@ -40,6 +42,11 @@ const mockQuizData: Quiz[] = [
         incorrect_answers: ['12', '8', '4'],
     },
 ]
+
+const quizStore = useQuizStore.getState()
+beforeEach(() => {
+    quizStore.reset()
+})
 
 test('정답 1개와 오답3개가 모두 화면에 보여야 한다.', async () => {
     render(
@@ -113,7 +120,6 @@ test('정답을 제출할때 저장되어야 한다.', async () => {
     jest.spyOn(fetch, 'fetchQuizList').mockResolvedValue(mockQuizData)
 
     jest.spyOn(randomUtil, 'rand').mockImplementation(() => 2)
-    quizStore.reset()
     render(<QuizSolve />)
     const answer = await screen.findByText(mockQuizData[0].incorrect_answers[0])
     fireEvent.click(answer)
@@ -122,16 +128,17 @@ test('정답을 제출할때 저장되어야 한다.', async () => {
     fireEvent.click(submitbutton)
 
     const { correct_answer, incorrect_answers, ...rest } = mockQuizData[0]
-
-    expect(quizStore.get()[0]).toEqual({
-        ...rest,
-        answers: [
-            incorrect_answers[0],
-            incorrect_answers[1],
-            correct_answer,
-            incorrect_answers[2],
-        ],
-        correctAnswerIndex: 2,
-        userAnswerIndex: 0,
+    await waitFor(() => {
+        expect(useQuizStore.getState().quizDatas[0]).toEqual({
+            ...rest,
+            answers: [
+                incorrect_answers[0],
+                incorrect_answers[1],
+                correct_answer,
+                incorrect_answers[2],
+            ],
+            correctAnswerIndex: 2,
+            userAnswerIndex: 0,
+        })
     })
 })

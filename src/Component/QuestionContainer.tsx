@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { quizStore } from '../store/quizStore'
-
+import { useQuizStore } from '../store/quizStore'
 import { MyQuiz } from '../types'
 
 type QuestionContainerProp = {
@@ -9,6 +8,8 @@ type QuestionContainerProp = {
 }
 
 function QuestionContainer({ quizData, setCanGoNext }: QuestionContainerProp) {
+    const addQuizData = useQuizStore((state) => state.add)
+
     const [isSubmit, setIsSubmit] = useState(false)
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<
         null | number
@@ -23,7 +24,7 @@ function QuestionContainer({ quizData, setCanGoNext }: QuestionContainerProp) {
         } else {
             setIsCorrect(false)
         }
-        quizStore.add({
+        addQuizData({
             ...quizData,
             userAnswerIndex: selectedAnswerIndex,
         })
